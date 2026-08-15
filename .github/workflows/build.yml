@@ -1,0 +1,100 @@
+name: Build
+
+# Native modules can't be cross-compiled, so each platform's executable is
+# built on its own runner. Pushing a tag also drafts a release with all of them.
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Install the browser the DOM suites run in
+        run: npx playwright install --with-deps chromium
+      - run: npm test
+
+  build:
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: windows
+            command: npm run dist:win
+          - os: macos-latest
+            name: macos
+            command: npm run dist:mac
+          - os: ubuntu-latest
+            name: linux
+            command: npm run dist:linux
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+        env:
+          # node-llama-cpp is optional: if its native build fails on a runner we
+          # still want an executable, just without local inference.
+          npm_config_build_from_source: false
+
+      - name: Build
+        run: ${{ matrix.command }}
+        env:
+          # These are unsigned builds. Without this, electron-builder tries to
+          # find a signing identity on macOS and fails the job rather than
+          # producing the unsigned artifact we actually want here.
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: the-computer-screen-${{ matrix.name }}
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            dist/*.AppImage
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          draft: true
+          body: |
+            Download the file for your system, then run it.
+
+            - **Windows** — `TheComputerScreen-*.exe`. One file, no installer.
+              These builds are unsigned, so Windows will show a
+              "Windows protected your PC" screen the first time: click
+              **More info**, then **Run anyway**.
+            - **macOS** — `TheComputerScreen-*-arm64.dmg` for Apple Silicon,
+              `-x64` for Intel. Unsigned and un-notarised, so macOS will refuse
+              a normal double-click: right-click the app and choose **Open**,
+              then **Open** again.
+            - **Linux** — `TheComputerScreen-*.AppImage`.
+              `chmod +x` it and run it.
