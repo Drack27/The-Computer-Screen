@@ -1,0 +1,5 @@
+[
+  { "date": "1925-05-03", "text": "Jackson Elias is murdered", "page": 21 },
+  { "date": "1925-10-31", "text": "The rite is performed" },
+  { "date": "not-a-date", "text": "This one should be dropped" }
+]

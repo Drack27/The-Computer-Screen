@@ -1,0 +1,4 @@
+{
+  "//": "Marks the renderer as ES modules so tests can import it under Node.",
+  "type": "module"
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Legacy Campaign",
+  "subtitle": "Written by the Masks-era build",
+  "pdf": "Sourcebook.pdf",
+  "clock": {
+    "start": "1925-05-01",
+    "end": "1926-05-01",
+    "current": "1925-05-03",
+    "doomsday": "1925-10-31",
+    "doomsdayLabel": "the rite"
+  },
+  "chapters": [
+    { "id": "newyork", "name": "New York", "color": "#c0392b" },
+    { "id": "london", "name": "London" }
+  ],
+  "locations": [
+    { "id": "world", "name": "The World", "parent": null, "chapter": "front", "map": "world.jpg", "pos": null },
+    { "id": "newyork", "name": "New York", "parent": "world", "chapter": "newyork", "map": "ny.jpg", "pos": [26, 38], "page": 24 },
+    { "id": "harlem", "name": "Harlem", "parent": "newyork", "chapter": "newyork", "map": null, "pos": null, "page": 31 },
+    { "id": "ju-ju-house", "name": "Ju-Ju House", "parent": "harlem", "chapter": "newyork", "map": null, "pos": null, "page": 33 },
+    { "id": "london", "name": "London", "parent": "world", "chapter": "london", "map": null, "pos": [48, 30] },
+    { "id": "orphan", "name": "Orphaned Place", "parent": "nowhere-at-all", "chapter": "london" },
+    { "id": "loop-a", "name": "Loop A", "parent": "loop-b", "chapter": "london" },
+    { "id": "loop-b", "name": "Loop B", "parent": "loop-a", "chapter": "london" }
+  ]
+}

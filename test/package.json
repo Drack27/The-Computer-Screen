@@ -1,0 +1,4 @@
+{
+  "//": "The test suite is ES modules; the app's main process stays CommonJS.",
+  "type": "module"
+}

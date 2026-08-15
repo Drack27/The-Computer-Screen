@@ -1,0 +1,20 @@
+[
+  {
+    "id": "jackson-elias",
+    "name": "Jackson Elias",
+    "chapter": "newyork",
+    "role": "Writer",
+    "age": "42",
+    "page": 22,
+    "description": "Your friend, and about to be dead.",
+    "links": [{ "text": "Wrote to the investigators" }],
+    "prose": ["A wiry man with an old scar."]
+  },
+  {
+    "id": "silas-n-mkwei",
+    "name": "Silas N'Kwei",
+    "chapter": "newyork",
+    "role": "Cult contact",
+    "page": 35
+  }
+]

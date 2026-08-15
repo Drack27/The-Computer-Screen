@@ -1,0 +1,47 @@
+[
+  {
+    "id": "maren-vosk",
+    "name": "Maren Vosk",
+    "kind": "npc",
+    "group": "riverlands",
+    "role": "Innkeeper",
+    "age": "51",
+    "home": "drowned-crow",
+    "description": "Runs the Drowned Crow, and has run it since the flood.",
+    "hooks": "Knows who drinks alone.",
+    "page": 27
+  },
+  {
+    "id": "brother-alden",
+    "name": "Brother Alden",
+    "kind": "npc",
+    "group": "riverlands",
+    "role": "Priest of Tymora",
+    "home": "temple-of-tymora",
+    "description": "Cheerful, and lying about something."
+  },
+  {
+    "id": "captain-hew",
+    "name": "Captain Hew",
+    "kind": "npc",
+    "group": "riverlands",
+    "role": "Watch captain",
+    "home": "kessington"
+  },
+  {
+    "id": "the-pale-choir",
+    "name": "The Pale Choir",
+    "kind": "faction",
+    "group": "frostmarch",
+    "home": "hollow-keep",
+    "description": "They sing on the nights the sun fails."
+  },
+  {
+    "id": "sister-oree",
+    "name": "Sister Oree",
+    "kind": "npc",
+    "group": "frostmarch",
+    "role": "Choirmaster",
+    "home": "hollow-keep"
+  }
+]
