@@ -1,0 +1,26 @@
+{
+  "name": "masks-gm",
+  "productName": "Masks GM",
+  "version": "0.1.0",
+  "description": "Keeper's atlas for Masks of Nyarlathotep — Call of Cthulhu, 1925",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable"
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "dompurify": "^3.4.4",
+    "marked": "^11.2.0"
+  },
+  "devDependencies": {
+    "electron": "^28.3.0",
+    "electron-builder": "^24.9.0"
+  },
+  "build": {
+    "appId": "com.masks.gm",
+    "productName": "Masks GM",
+    "directories": { "output": "dist" },
+    "win": { "target": [{ "target": "portable" }] }
+  }
+}
