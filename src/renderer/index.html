@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' gmapp:; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' gmapp: data:; connect-src 'self'">
+  <title>The Computer Screen</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+
+    <aside id="clockbar">
+      <div class="brand">
+        <div class="brand-title" id="brand-title" title="Campaign settings">CAMPAIGN</div>
+        <div class="brand-sub" id="brand-sub"></div>
+      </div>
+
+      <div class="clock">
+        <div class="clock-date" id="clock-date" title="Jump to a date">—</div>
+        <div class="clock-weekday" id="clock-weekday"></div>
+        <div class="clock-doom" id="clock-doom"></div>
+        <div class="clock-track">
+          <input type="range" id="clock-slider" min="0" max="365" value="0" aria-label="Campaign date">
+          <div class="clock-marks" id="clock-marks"></div>
+        </div>
+        <div class="clock-nudge">
+          <button id="clock-prev" title="Back one day (←)">&#9664;</button>
+          <button id="clock-today" title="Jump to the latest session">Now</button>
+          <button id="clock-next" title="Forward one day (→)">&#9654;</button>
+        </div>
+      </div>
+
+      <div class="lane-head">Events near this date</div>
+      <div id="clock-events" class="lane-list"></div>
+
+      <div class="lane-head">
+        <span>Legend</span>
+        <button id="groups-button" class="tiny" title="Edit groups">edit</button>
+      </div>
+      <div id="clock-legend" class="legend"></div>
+    </aside>
+
+    <main id="stage">
+      <div id="stage-bar">
+        <div id="breadcrumb"></div>
+        <div id="stage-tools"></div>
+      </div>
+      <div id="stage-body">
+        <div id="map-wrap">
+          <div id="map-container">
+            <img id="map-img" alt="" draggable="false">
+            <div id="hotspot-layer"></div>
+            <div id="blip-layer"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside id="railbar">
+      <div class="rail-tabs">
+        <button class="rail-tab active" data-rail="places">Places</button>
+        <button class="rail-tab" data-rail="people">People</button>
+        <button class="rail-tab" data-rail="events">Events</button>
+        <button class="rail-tab" data-rail="notes">Notes</button>
+      </div>
+      <div class="rail-search">
+        <input type="search" id="rail-filter" placeholder="Filter…" aria-label="Filter the list">
+        <button id="rail-add" class="rail-add" title="Add">＋</button>
+      </div>
+      <div id="rail-body"></div>
+    </aside>
+
+    <div id="panel" class="panel hidden">
+      <div class="panel-head">
+        <div class="panel-heading">
+          <span id="panel-title"></span>
+          <span id="panel-subtitle"></span>
+        </div>
+        <div class="panel-actions">
+          <button id="panel-source" class="hidden" title="Open the source book here">Book</button>
+          <button id="panel-edit" title="Edit">Edit</button>
+          <button id="panel-close" title="Close (Esc)">&#10005;</button>
+        </div>
+      </div>
+      <div id="panel-body"></div>
+    </div>
+
+  </div>
+
+  <div id="modal-overlay" class="hidden">
+    <div id="modal-box">
+      <div id="modal-header"></div>
+      <div id="modal-body"></div>
+      <div id="modal-footer"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="hidden"></div>
+
+  <script type="module" src="boot.js"></script>
+</body>
+</html>

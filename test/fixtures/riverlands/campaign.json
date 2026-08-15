@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 2,
+  "title": "The Riverlands",
+  "subtitle": "A test campaign on a fantasy calendar",
+  "system": "Generic Fantasy",
+  "calendar": { "preset": "harptos" },
+  "clock": {
+    "start": "1491-01-01",
+    "end": "1492-01-01",
+    "current": "1491-01-15",
+    "marks": [
+      { "id": "nightfall", "date": "1491-07-10", "label": "the Nightfall Rite", "kind": "doom", "color": "#c0392b" }
+    ]
+  },
+  "groups": [
+    { "id": "riverlands", "name": "The Riverlands", "color": "#2980b9" },
+    { "id": "frostmarch", "name": "The Frostmarch", "color": "#8e44ad" }
+  ],
+  "sources": [
+    { "id": "book", "title": "Riverlands Gazetteer", "path": "Gazetteer.pdf", "kind": "pdf" }
+  ],
+  "locations": [
+    { "id": "world", "name": "The Known World", "parent": null, "group": null, "map": "world.png", "pos": null },
+    { "id": "riverlands", "name": "The Riverlands", "parent": "world", "group": "riverlands", "map": "riverlands.png", "pos": [30, 40], "page": 12 },
+    { "id": "kessington", "name": "Kessington", "parent": "riverlands", "group": "riverlands", "map": "kessington.png", "pos": [45, 55], "page": 24 },
+    { "id": "drowned-crow", "name": "The Drowned Crow", "parent": "kessington", "group": "riverlands", "map": null, "pos": [30, 60], "page": 26 },
+    { "id": "temple-of-tymora", "name": "Temple of Tymora", "parent": "kessington", "group": "riverlands", "map": null, "pos": null },
+    { "id": "millhaven", "name": "Millhaven", "parent": "riverlands", "group": "riverlands", "map": null, "pos": [70, 30] },
+    { "id": "frostmarch", "name": "The Frostmarch", "parent": "world", "group": "frostmarch", "map": "frostmarch.png", "pos": [65, 20] },
+    { "id": "hollow-keep", "name": "The Hollow Keep", "parent": "frostmarch", "group": "frostmarch", "map": null, "pos": null }
+  ]
+}

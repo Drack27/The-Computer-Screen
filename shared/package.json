@@ -1,0 +1,4 @@
+{
+  "//": "Marks shared/ as ES modules while the Electron main process stays CommonJS.",
+  "type": "module"
+}
