@@ -74,6 +74,25 @@ contextBridge.exposeInMainWorld('api', {
     save: (patch) => call('config:save', patch),
   },
 
+  assistant: {
+    status: () => call('assistant:status'),
+    reindex: () => call('assistant:reindex'),
+    search: (query, options) => call('assistant:search', query, options),
+    ask: (payload) => call('assistant:ask', payload),
+    stop: () => call('assistant:stop'),
+    saveKey: (provider, key) => call('assistant:save-key', provider, key),
+    test: (settings) => call('assistant:test', settings),
+
+    planDownload: (modelId) => call('assistant:local-plan', modelId),
+    download: (planned) => call('assistant:local-download', planned),
+    cancelDownload: (filename) => call('assistant:local-cancel', filename),
+    removeModel: (id) => call('assistant:local-remove', id),
+    pickModelFile: () => call('assistant:local-pick'),
+
+    onEvent: (handler) => on('assistant:event', handler),
+    onDownloadProgress: (handler) => on('assistant:download', handler),
+  },
+
   markdown: (text) => DOMPurify.sanitize(marked.parse(text || '')),
 
   events: {

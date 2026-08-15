@@ -12,8 +12,19 @@ const { pathToFileURL } = require('url');
 const { shared } = require('./shared');
 const { loadConfig, saveConfig, forgetVault } = require('./store');
 const { sanitizeFilename } = require('./vault');
+const { Assistant } = require('./llm/assistant');
+const providers = require('./llm/providers');
+const local = require('./llm/local');
+const keys = require('./llm/keys');
 
 function registerIpc(ctx) {
+  const assistant = new Assistant(ctx);
+  ctx.assistant = assistant;
+
+  const toRenderer = (channel, payload) => {
+    if (ctx.win && !ctx.win.isDestroyed()) ctx.win.webContents.send(channel, payload);
+  };
+
   const need = () => {
     if (!ctx.vault) throw new Error('No campaign is open.');
     return ctx.vault;
@@ -187,6 +198,52 @@ function registerIpc(ctx) {
       throw new Error('There is already a campaign in that folder.');
     }
     return ctx.newCampaign({ ...options, dir });
+  });
+
+  // ── Assistant ──────────────────────────────────────────────────────────────
+
+  handle('assistant:status', () => assistant.status());
+  handle('assistant:reindex', () => assistant.rebuild());
+  handle('assistant:search', (query, options) => assistant.search(query, options || {}));
+  handle('assistant:stop', () => assistant.stop());
+
+  handle('assistant:ask', async (payload) => {
+    // Answers arrive as events rather than a return value, so the renderer can
+    // paint each fragment as it lands.
+    await assistant.ask(payload, (event) => toRenderer('assistant:event', event));
+    return true;
+  });
+
+  // ── Credentials ────────────────────────────────────────────────────────────
+
+  handle('assistant:save-key', (providerId, key) => keys.set(providerId, key));
+  handle('assistant:test', (settings) => providers.test(settings));
+
+  // ── Local models ───────────────────────────────────────────────────────────
+
+  /** Resolve the real file and its real size, so the consent dialog can state
+   *  the actual number of gigabytes rather than an estimate from build time. */
+  handle('assistant:local-plan', (modelId) => local.plan(modelId));
+
+  handle('assistant:local-download', async (planned) => {
+    const result = await local.download(planned, (progress) => {
+      toRenderer('assistant:download', { ...progress, filename: planned.filename });
+    });
+    return result;
+  });
+
+  handle('assistant:local-cancel', (filename) => local.cancel(filename));
+  handle('assistant:local-remove', (id) => local.remove(id));
+
+  handle('assistant:local-pick', async () => {
+    const picked = await dialog.showOpenDialog(ctx.win, {
+      title: 'Choose a model file',
+      message: 'Pick a .gguf model you have already downloaded.',
+      properties: ['openFile'],
+      filters: [{ name: 'GGUF models', extensions: ['gguf'] }],
+    });
+    if (picked.canceled || !picked.filePaths[0]) return null;
+    return local.adopt(picked.filePaths[0]);
   });
 
   // ── App preferences ────────────────────────────────────────────────────────

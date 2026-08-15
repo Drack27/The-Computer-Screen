@@ -101,6 +101,30 @@ export async function fakeApi(fixture) {
       create: async () => ({ ok: true }),
     },
     config: { load: async () => ({}), save: async (patch) => patch },
+
+    // The assistant is stubbed rather than absent: the renderer wires it up at
+    // boot, so a missing surface here would take the whole app down.
+    assistant: {
+      status: async () => ({
+        index: { chunks: 0, builtAt: null },
+        providers: [{ id: 'anthropic', label: 'Anthropic', models: [], defaultModel: '', hasKey: false }],
+        keychain: true,
+        local: { engine: { available: false, error: 'not built in tests' }, installed: [], catalog: [], directory: '/models' },
+      }),
+      reindex: async () => ({ chunks: 0, notes: 0, builtAt: Date.now() }),
+      search: async () => [],
+      ask: async () => true,
+      stop: async () => true,
+      saveKey: async () => true,
+      test: async () => 'ready',
+      planDownload: async () => null,
+      download: async () => null,
+      cancelDownload: async () => true,
+      removeModel: async () => true,
+      pickModelFile: async () => null,
+      onEvent: () => () => {},
+      onDownloadProgress: () => () => {},
+    },
     markdown: (text) => String(text || '').replace(/[<>]/g, ''),
     events: {
       onFileChanged: () => () => {},

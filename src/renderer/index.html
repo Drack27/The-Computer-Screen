@@ -86,6 +86,24 @@
       <div id="panel-body"></div>
     </div>
 
+    <div id="assistant" class="assistant hidden">
+      <div class="assistant-head">
+        <span class="assistant-title">Assistant</span>
+        <div class="panel-actions">
+          <button id="assistant-reindex" title="Re-read the campaign folder">Reindex</button>
+          <button id="assistant-settings" title="Choose a model">Settings</button>
+          <button id="assistant-close" title="Close (Esc)">&#10005;</button>
+        </div>
+      </div>
+      <div id="assistant-log" class="assistant-log"></div>
+      <div id="assistant-controls" class="assistant-controls"></div>
+      <form id="assistant-form" class="assistant-form">
+        <textarea id="assistant-input" rows="2" placeholder="Ask about your campaign…"></textarea>
+        <button type="submit" class="primary">Ask</button>
+      </form>
+      <div id="assistant-status" class="assistant-status"></div>
+    </div>
+
   </div>
 
   <div id="modal-overlay" class="hidden">

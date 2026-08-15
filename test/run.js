@@ -12,6 +12,7 @@ import { fileURLToPath } from 'url';
 import { suite, skip, report, absorb } from './harness.js';
 import runCalendar from './calendar.test.js';
 import runSchema from './schema.test.js';
+import runRetrieval from './retrieval.test.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..');
@@ -27,6 +28,7 @@ const CONTENT_TYPES = {
 
 runCalendar();
 runSchema();
+runRetrieval();
 
 const chromium = await findChromium();
 if (!chromium) {

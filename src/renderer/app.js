@@ -17,6 +17,7 @@ import {
   locationDialog, entityDialog, eventDialog, movementDialog,
   campaignSettingsDialog, newCampaignDialog, groupsDialog, refreshMapFiles,
 } from './editors.js';
+import { wireAssistant, toggle as toggleAssistant } from './assistant.js';
 
 export async function boot() {
   try {
@@ -32,6 +33,7 @@ export async function boot() {
   wireAtlas();
   wireRails();
   wirePanel();
+  wireAssistant();
   wireBrand();
   wireActions();
   wireKeyboard();
@@ -102,7 +104,7 @@ function wireActions() {
     else if (action === 'add') emit('add', what);
     else if (action === 'search') focusSearch();
     else if (action === 'import') toast('Import arrives in the next build.');
-    else if (action === 'toggle-assistant') toast('The assistant arrives in the next build.');
+    else if (action === 'toggle-assistant') emit('toggle-assistant');
   });
 }
 
@@ -130,6 +132,7 @@ function wireKeyboard() {
 
     if (event.key === 'Escape') {
       if (isModalOpen()) hideModal();
+      else if (!$('assistant').classList.contains('hidden')) toggleAssistant(false);
       else closePanel();
       return;
     }
@@ -137,6 +140,12 @@ function wireKeyboard() {
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
       event.preventDefault();
       focusSearch();
+      return;
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'j') {
+      event.preventDefault();
+      emit('toggle-assistant');
       return;
     }
 
