@@ -17,8 +17,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-      - run: npm ci
+      # `npm install` rather than `npm ci`: there is no lockfile in the repo
+      # yet. Run `npm install` locally once and commit the generated
+      # package-lock.json, then this can become `npm ci` for reproducible builds.
+      - run: npm install
       - name: Install the browser the DOM suites run in
         run: npx playwright install --with-deps chromium
       - run: npm test
@@ -45,10 +47,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
       - name: Install
-        run: npm ci
+        run: npm install
         env:
           # node-llama-cpp is optional: if its native build fails on a runner we
           # still want an executable, just without local inference.

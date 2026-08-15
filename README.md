@@ -14,7 +14,7 @@ calendar you invented, because the calendar is data, not code.
 ## Running it
 
 ```bash
-npm install
+npm install    # also writes package-lock.json, which is worth committing
 npm start
 ```
 
